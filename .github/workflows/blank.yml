@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: set git log
         run: |
-          TEST= git log --oneline main 3c13089697c0c6e142fc9d4f8e751bfc7d215ad1
+          TEST= git log --oneline d83cfdf9874892826855b216abe02b37a5e41fbb..main
           echo ${TEST}
       - name: post slack message
         run: |
