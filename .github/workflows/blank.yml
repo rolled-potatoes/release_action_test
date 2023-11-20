@@ -13,8 +13,9 @@ jobs:
   post:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: post slack message
         run: |
           curl -X POST -H 'Content-type: application/json' --data '${{ env.MESSAGE }}' "${{ secrets.SLACK_WEB_HOOK }}"
         env:
-          MESSAGE: '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"${{ github.repository }}릴리즈 합니다."}}]}'
+          MESSAGE: '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n${{ github.repository }}릴리즈 합니다.\n${GITHUB_REPOSITORY}"}}]}'
