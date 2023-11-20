@@ -16,9 +16,12 @@ jobs:
       - uses: actions/checkout@v2
       - name: set-git-log
         run: |
-          TEST=$(echo $(git log --oneline d83cfdf9874892826855b216abe02b37a5e41fbb..main))
-          echo ${TEST}
+          TEST=$(echo $(git log --oneline 035c28482ecb2fa97ec73e80c46359447e42f69d..main))
+          echo $TEST
           echo "::set-output name=script-output::$TEST"
+          echo "script-output=$TEST" >> $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
+          
       - name: post slack message
         run: |
           curl -X POST -H 'Content-type: application/json' --data '${{ env.MESSAGE }}' "${{ secrets.SLACK_WEB_HOOK }}"
