@@ -1,0 +1,19 @@
+name: relase_push
+
+on:
+  push:
+    branches: [ "releases/**" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: post slack message
+        run: |
+          MESSAGE= '{ "blocks": [ { "type": "section", "text": { "type": "mrkdwn", "text": "<!here>\n${{ github.repository }} 릴리즈 합니다." } } ] }'
+          curl -X POST -H 'Content-type: application/json' --data "${MESSAGE}" "${{ secrets.SLACK_WEB_HOOK }}"
