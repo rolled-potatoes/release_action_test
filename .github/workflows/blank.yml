@@ -14,12 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: set git log
+      - name: set-git-log
         run: |
-          TEST= git log --oneline d83cfdf9874892826855b216abe02b37a5e41fbb..main
+          TEST=$(echo $(git log --oneline d83cfdf9874892826855b216abe02b37a5e41fbb..main))
           echo ${TEST}
+          echo "::set-output name=script-output::$TEST"
       - name: post slack message
         run: |
           curl -X POST -H 'Content-type: application/json' --data '${{ env.MESSAGE }}' "${{ secrets.SLACK_WEB_HOOK }}"
         env:
-          MESSAGE: '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다.\n"}}]}'
+          MESSAGE: '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다.\n${{ steps.set-git-log.outputs.script-output }}"}}]}'
