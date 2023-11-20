@@ -18,4 +18,4 @@ jobs:
         run: |
           curl -X POST -H 'Content-type: application/json' --data '${{ env.MESSAGE }}' "${{ secrets.SLACK_WEB_HOOK }}"
         env:
-          MESSAGE: '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n${{ github.repository }}릴리즈 합니다.\nhttps://github.com/${{ github.repository }"}}]}'
+          MESSAGE: '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n${{ github.repository }}릴리즈 합니다.\nhttps://github.com/${{ github.repository }}"}}]}'
