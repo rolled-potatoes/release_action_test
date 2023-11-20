@@ -15,5 +15,6 @@ jobs:
     steps:
       - name: post slack message
         run: |
-          MESSAGE='{ "blocks": [ { "type": "section", "text": { "type": "mrkdwn", "text": "<!here>\n${{ github.repository }} 릴리즈 합니다." } } ] }'
-          curl -X POST -H 'Content-type: application/json' --data "${MESSAGE}" "${{ secrets.SLACK_WEB_HOOK }}"
+          curl -X POST -H 'Content-type: application/json' --data "${{ env.MESSAGE }" "${{ secrets.SLACK_WEB_HOOK }}"
+        env:
+          MESSAGE: '{ "blocks": [ { "type": "section", "text": { "type": "mrkdwn", "text": "<!here>\n${{ github.repository }} 릴리즈 합니다." } } ] }'
