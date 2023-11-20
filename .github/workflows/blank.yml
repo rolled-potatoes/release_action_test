@@ -14,6 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: set git log
+        run: |
+          TEST= git log --oneline main 3c13089697c0c6e142fc9d4f8e751bfc7d215ad1
+          echo ${TEST}
       - name: post slack message
         run: |
           curl -X POST -H 'Content-type: application/json' --data '${{ env.MESSAGE }}' "${{ secrets.SLACK_WEB_HOOK }}"
