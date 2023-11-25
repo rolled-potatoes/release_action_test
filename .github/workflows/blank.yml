@@ -7,25 +7,12 @@ on:
 
 jobs:
   post:
+    if: github.event.created
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: git_log
         run: |
-          # git remote update
-          # echo "Current Branch: $(git rev-parse --abbrev-ref HEAD)"
+          MESSAGE='{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다.\n"}}]}'
           
-          # TO_BRANCH="origin/main"
-          
-          # echo "To Branch: ${TO_BRANCH}"
-          git fetch --quiet
-          FROM_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-          echo "From Branch: ${FROM_BRANCH}"
-          echo $(git branch -r | grep "${FROM_BRANCH}$")
-          if git branch -r | grep "${FROM_BRANCH}$"; then
-            echo "exit"
-          else
-            MESSAGE='{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다.\n"}}]}'
-          
-            curl -X POST -H 'Content-type: application/json' --data "${MESSAGE}" "${{ secrets.SLACK_WEB_HOOK }}"
-          fi
+          curl -X POST -H 'Content-type: application/json' --data "${MESSAGE}" "${{ secrets.SLACK_WEB_HOOK }}"
