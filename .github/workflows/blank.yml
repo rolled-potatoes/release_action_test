@@ -13,15 +13,18 @@ jobs:
       - name: git_log
         run: |
           git remote update
-          echo "Current Branch: $(git rev-parse --abbrev-ref HEAD)"
+          # echo "Current Branch: $(git rev-parse --abbrev-ref HEAD)"
           FROM_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-          TO_BRANCH="main"
-          echo "From Branch: ${FROM_BRANCH}"
-          echo "To Branch: ${TO_BRANCH}"
+          TO_BRANCH="origin/main"
+          # echo "From Branch: ${FROM_BRANCH}"
+          # echo "To Branch: ${TO_BRANCH}"
           
+                 
+          if [[ "${{ github.ref }}" == "refs/heads/"* ]]; then
+            echo "This is a new branch."
+            MESSAGE='{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다.\n"}}]}'
           
-          CM=$(git log --pretty=format:"%B" origin/main..${FROM_BRANCH})
-          MESSAGE='{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다.\n'"$CM"'"}}]}'
-          
-          curl -X POST -H 'Content-type: application/json' --data "${MESSAGE}" "${{ secrets.SLACK_WEB_HOOK }}"
-          
+            curl -X POST -H 'Content-type: application/json' --data "${MESSAGE}" "${{ secrets.SLACK_WEB_HOOK }}"
+          else
+            echo "This is an existing branch."
+          fi
