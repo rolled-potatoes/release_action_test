@@ -18,7 +18,7 @@ jobs:
         run: |
           FROM_BRANCH=$(git rev-parse --abbrev-ref HEAD)
           TO_BRANCH="main"
-          COMMIT_MESSAGE=$(git log --format=%B ${FROM_BRANCH}..${TO_BRANCH})
+          COMMIT_MESSAGE=$(git log --format=%B ${TO_BRANCH}..${FROM_BRANCH})
           echo "Commit Message: ${COMMIT_MESSAGE}"
       - name: post slack message
         run: |
