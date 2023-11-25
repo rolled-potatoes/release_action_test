@@ -14,17 +14,16 @@ jobs:
         run: |
           # git remote update
           # echo "Current Branch: $(git rev-parse --abbrev-ref HEAD)"
-          # FROM_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          FROM_BRANCH=$(git rev-parse --abbrev-ref HEAD)
           # TO_BRANCH="origin/main"
           # echo "From Branch: ${FROM_BRANCH}"
           # echo "To Branch: ${TO_BRANCH}"
-          
+          git fetch --quiet
                  
-          if [[ "${{ github.ref }}" == "refs/heads/"* ]]; then
-            echo "This is a new branch."
+          if git branch -r | grep -q "${FROM_BRANCH}$"; then
+            
+          else
             MESSAGE='{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다.\n"}}]}'
           
             curl -X POST -H 'Content-type: application/json' --data "${MESSAGE}" "${{ secrets.SLACK_WEB_HOOK }}"
-          else
-            echo "This is an existing branch."
           fi
