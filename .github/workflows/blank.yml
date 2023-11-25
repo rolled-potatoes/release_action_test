@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Debug Info
         run: |
-          git remove update
+          git remote update
           echo $(git branch)
           echo "Current Branch: $(git rev-parse --abbrev-ref HEAD)"
           FROM_BRANCH=$(git rev-parse --abbrev-ref HEAD)
