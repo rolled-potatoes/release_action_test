@@ -16,11 +16,12 @@ jobs:
           # echo "Current Branch: $(git rev-parse --abbrev-ref HEAD)"
           
           # TO_BRANCH="origin/main"
-          # echo "From Branch: ${FROM_BRANCH}"
+          
           # echo "To Branch: ${TO_BRANCH}"
           git fetch --quiet
           FROM_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-          
+          echo "From Branch: ${FROM_BRANCH}"
+          echo $(git branch -r | grep "${FROM_BRANCH}$")
           if git branch -r | grep "${FROM_BRANCH}$"; then
             echo "exit"
           else
