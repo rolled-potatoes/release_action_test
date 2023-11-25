@@ -1,25 +1,25 @@
-name: relase_push
+name: release_push
 
 on:
   push:
     branches: [ "releases/**" ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-    
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   post:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: set-git-log
+      - name: Debug Info
         run: |
-          MAIN_HASH=$(git rev-parse main)
-          RELEASE_HASH=$(git rev-parse --abbrev-ref HEAD)
-
-          COMMIT_MESSAGE=$(git log --format=%B 03e17e1129ae852e360550a9a4a0c6049f15fcd2..${RELEASE_HASH})
+          git remote update
+          echo $(git branch)
+          echo "Current Branch: $(git rev-parse --abbrev-ref HEAD)"
+          FROM_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          TO_BRANCH="main"
+          echo "From Branch: ${FROM_BRANCH}"
+          echo "To Branch: ${TO_BRANCH}"
+          COMMIT_MESSAGE=$(git log --format=%B origin/main..${FROM_BRANCH})
           echo "Commit Message: ${COMMIT_MESSAGE}"
       - name: post slack message
         run: |
