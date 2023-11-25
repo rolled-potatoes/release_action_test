@@ -16,10 +16,12 @@ jobs:
       - uses: actions/checkout@v2
       - name: set-git-log
         run: |
-          COMMIT_MESSAGE=$(git log --format=%B $(git rev-parse main)..$(git rev-parse HEAD))
+          MAIN_HASH=$(git rev-parse main)
+          RELEASE_HASH$(git rev-parse HEAD)
+          COMMIT_MESSAGE=$(git log --format=%B 03e17e1129ae852e360550a9a4a0c6049f15fcd2.."${RELEASE_HASH}")
           echo "Commit Message: ${COMMIT_MESSAGE}"
       - name: post slack message
         run: |
           curl -X POST -H 'Content-type: application/json' --data '${{ env.MESSAGE }}' "${{ secrets.SLACK_WEB_HOOK }}"
         env:
-          MESSAGE: '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다.\n${{ steps.set-git-log.outputs.script-output }}"}}]}'
+          MESSAGE: '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다."}}]}'
