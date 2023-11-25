@@ -19,7 +19,7 @@ jobs:
           TO_BRANCH="main"
           echo "From Branch: ${FROM_BRANCH}"
           echo "To Branch: ${TO_BRANCH}"
-          COMMIT_MESSAGE=$(git log --format=%B main..${FROM_BRANCH})
+          COMMIT_MESSAGE=$(git log --format=%B origin/main..${FROM_BRANCH})
           echo "Commit Message: ${COMMIT_MESSAGE}"
       - name: post slack message
         run: |
