@@ -21,7 +21,7 @@ jobs:
           COMMIT_MESSAGE=$(git log --format=%B origin/main..${FROM_BRANCH})
           
           echo "Commit Message: ${COMMIT_MESSAGE}"
-          echo "commit_message=${COMMIT_MESSAGE}" >> $GITHUB_OUTPUT
+          echo "commit_message=${COMMIT_MESSAGE}" >> "$GITHUB_OUTPUT"
       - name: post slack message
         run: |
           echo "$COMMIT_MESSAGE"
