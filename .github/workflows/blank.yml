@@ -24,7 +24,7 @@ jobs:
           echo "commit_message=${COMMIT_MESSAGE}" >> $GITHUB_OUTPUT
       - name: post slack message
         run: |
-          echo ${{ steps.git_log.outputs.commit_message }}
+          echo "${{ steps.git_log.outputs.commit_message }}"
           curl -X POST -H 'Content-type: application/json' --data '${{ env.MESSAGE }}' "${{ secrets.SLACK_WEB_HOOK }}"
         env:
-          MESSAGE: '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다.\n${{ steps.Debug_Info.outputs.commit_message }}"}}]}'
+          MESSAGE: '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다.\n${{ steps.git_log.outputs.commit_message }}"}}]}'
