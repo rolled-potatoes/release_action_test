@@ -21,7 +21,7 @@ jobs:
           git fetch --quiet
           FROM_BRANCH=$(git rev-parse --abbrev-ref HEAD)
           
-          if git branch -r | grep -q "${FROM_BRANCH}$"; then
+          if git branch -r | grep "${FROM_BRANCH}$"; then
             echo "exit"
           else
             MESSAGE='{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다.\n"}}]}'
