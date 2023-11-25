@@ -20,7 +20,7 @@ jobs:
           echo "To Branch: ${TO_BRANCH}"
           
           
-          CM=$(git log --format=%B origin/main..${FROM_BRANCH})
+          CM=$(git log --pretty=format:"%B" origin/main..${FROM_BRANCH})
           MESSAGE='{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다.\n'"$CM"'"}}]}'
           
           curl -X POST -H 'Content-type: application/json' --data "${MESSAGE}" "${{ secrets.SLACK_WEB_HOOK }}"
