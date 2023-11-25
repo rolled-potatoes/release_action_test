@@ -18,11 +18,8 @@ jobs:
           TO_BRANCH="main"
           echo "From Branch: ${FROM_BRANCH}"
           echo "To Branch: ${TO_BRANCH}"
-          git log --format=%B origin/main..${FROM_BRANCH} > ./commit_messge
+          CM=$(git log --format=%B origin/main..${FROM_BRANCH})
           
-      - name: post slack message
-        run: |
-          cat ./commit_message
-          curl -X POST -H 'Content-type: application/json' --data '${{ env.MESSAGE }}' "${{ secrets.SLACK_WEB_HOOK }}"
-        env:
-          MESSAGE: '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다."}}]}'
+          MESSAGE='{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다.\n${CM}"}}]}'
+          
+          curl -X POST -H 'Content-type: application/json' --data '${MESSAGE}' "${{ secrets.SLACK_WEB_HOOK }}"
