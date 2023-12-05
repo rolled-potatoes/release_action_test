@@ -2,7 +2,7 @@ name: release_push
 
 on:
   push:
-    branches: [ "releases/**" ]
+    branches: ["releases/**"]
   workflow_dispatch:
 
 jobs:
@@ -25,4 +25,4 @@ jobs:
         run: |
           curl -X POST -H 'Content-type: application/json' --data '${{ env.MESSAGE }}' "${{ secrets.SLACK_WEB_HOOK }}"
         env:
-          MESSAGE: '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!here>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다."}}]}'
+          MESSAGE: '{"blocks":[{"type":"section","text":{"type":"mrkdwn","text":"<!@eduOps>\n<https://github.com/${{ github.repository }}|${{ github.repository }}>릴리즈 합니다."}}]}'
