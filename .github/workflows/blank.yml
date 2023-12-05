@@ -2,7 +2,7 @@ name: release_push
 
 on:
   push:
-    branches: ["releases/**"]
+    branches: ["release/**"]
   workflow_dispatch:
 
 jobs:
