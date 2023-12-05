@@ -26,4 +26,4 @@ jobs:
         run: |
           FROM_BRANCH=$(git rev-parse --abbrev-ref HEAD)
           MESSAGE='{"blocks":[{"type":"header","text":{"type":"plain_text","text":":tada: 릴리즈 알림 :tada:","emoji":true}},{"type":"section","text":{"type":"mrkdwn","text":"*레포지토리:*\\n<https://github.com/${{ github.repository }}|${{ github.repository }}>\\n*브랜치:*\\n${FROM_BRANCH}"},"accessory":{"type":"image","image_url":"https://api.slack.com/img/blocks/bkb_template_images/approvalsNewDevice.png","alt_text":"computer thumbnail"}}]}'
-          curl -X POST -H 'Content-type: application/json' --data "${MESSAGE}" "${{ secrets.SLACK_WEB_HOOK }}"
+          curl -X POST -H 'Content-type: application/json' --data $MESSAGE "${{ secrets.SLACK_WEB_HOOK }}"
